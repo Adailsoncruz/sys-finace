@@ -1,6 +1,6 @@
 import { NotePencil, Trash } from "phosphor-react";
 
-export default function Table() {
+export default function Table({produtcs}) {
     return (
         <table className="w-full text-center ">
             <thead className="bg-[#F7FBFD] text-gray-400 border-b">
@@ -12,10 +12,12 @@ export default function Table() {
                 </tr>
             </thead>
             <tbody>
-                <tr className="border-b hover:bg-gray-100 transition-all duration-300">
-                    <td className="py-2">1</td>
-                    <td className="py-2">Mouse</td>
-                    <td className="py-2">R$ 10000,00</td>
+                {produtcs.map((product) => {
+                    return(
+                        <tr key={product.id} className="border-b hover:bg-gray-100 transition-all duration-300">
+                    <td className="py-2">{product.id}</td>
+                    <td className="py-2">{product.name}</td>
+                    <td className="py-2">R${product.price},00</td>
                     <td>
                         <div className="flex gap-2 items-center justify-center">
                             <div className="bg-[#118DC0] rounded p-2 text-white cursor-pointer
@@ -30,6 +32,8 @@ export default function Table() {
                         </div>
                     </td>
                 </tr>
+                    )
+                })}
             </tbody>
         </table>
     )

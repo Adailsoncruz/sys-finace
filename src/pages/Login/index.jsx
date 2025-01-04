@@ -1,11 +1,15 @@
 import { useState } from "react"
 import image from "../../assets/cat-astronaut-animate.svg"
+import { useNavigate } from "react-router-dom"
 
 export default function LoginPage() {
     const [user, setUser] = useState("")
     const [senha, setSenha] = useState("")
 
+    const navigate = useNavigate();
+
     function clickLogin() {
+        navigate("/products");
         console.log(user)
         console.log(senha)
     }
