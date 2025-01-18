@@ -8,23 +8,31 @@ import Input from '../Input/Input'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-export default function Modal({open, setOpen}) {
+export default function ModalUpdate({ open, setOpen, selectedPoduct, setselectedProduct }) {
     const navigate = useNavigate();
 
-    const [product,setProduct] = useState ({});
-
-    function handleChange(event) {
-        setProduct({
-            ...product,
-            [event.target.id]: event.target.value,
-
-        });
+    function handleChangeName(event) {
+        setselectedProduct({
+            ...selectedPoduct,
+            name: event.target.value,
+        })
     }
 
-    async function handleCreateNewProduct(){
-        
-        await axios.post("http://localhost:3000/products", product);
-        navigate(0);
+    function handleChangePrice(event){
+        setselectedProduct({
+            ...selectedPoduct,
+            price: event.target.value,
+        })
+    }
+
+    async function handleUpdateProduct() {
+        try {
+            await axios.put(`http://localhost:3000/products/${selectedPoduct.id}`, selectedPoduct);
+
+            navigate(0);
+        }catch(error){
+            console.error(error);
+        }
     }
 
 
@@ -44,26 +52,24 @@ export default function Modal({open, setOpen}) {
                         <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                             <div className="sm:flex sm:items-start">
                                 <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-green-400 sm:mx-0 sm:size-10">
-                                     <PlusCircle size={32} className='text-base font-semibold text-gray-900'/>
+                                    <PlusCircle size={32} className='text-base font-semibold text-gray-900' />
                                 </div>
                                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                     <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
-                                        Novo Produto
+                                        Editar produto
                                     </DialogTitle>
                                     <div className="mt-2">
-                                        <Input title="Nome do produto" id="name"
-                                        onChange={(event) => setProduct((prevState) => ({
-                                            ...prevState,
-                                            name: event.target.value
-                                        }))}
-                                        />                                                                             
-                                        <Input 
-                                         title="Preço"
-                                         id="price" 
-                                         onChange={(event) => setProduct((prevState) => ({
-                                            ...prevState,
-                                            price: event.target.value
-                                        }))}
+                                        <Input
+                                            title="Nome do produto"
+                                            id="name"
+                                            value={selectedPoduct?.name}
+                                            onChange={(event) => handleChangeName(event)}
+                                        />
+                                        <Input
+                                            title="Preço"
+                                            id="price"
+                                            value={selectedPoduct?.price}
+                                            onChange={(event) => handleChangePrice(event)}
                                         />
                                     </div>
                                 </div>
@@ -72,7 +78,7 @@ export default function Modal({open, setOpen}) {
                         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                             <button
                                 type="button"
-                                onClick={() => handleCreateNewProduct()}
+                                onClick={handleUpdateProduct}
                                 className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                             >
                                 Salvar

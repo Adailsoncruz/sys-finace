@@ -1,6 +1,24 @@
 {
-    "products": [
-      { "id": "1", "name": "Mouse", "price": 20 },
-      { "id": "2", "name": "Teclado", "price": 50 }
-    ]
-  }
+  "products": [
+    {
+      "id": "1",
+      "name": "Mouse",
+      "price": 20
+    },
+    {
+      "id": "d0b4",
+      "name": "Mesa",
+      "price": "50"
+    },
+    {
+      "id": "659d",
+      "name": "JBL",
+      "price": "30000"
+    },
+    {
+      "id": "50b6",
+      "name": "Mesa",
+      "price": "5000"
+    }
+  ]
+}
