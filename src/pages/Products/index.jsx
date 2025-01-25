@@ -13,11 +13,12 @@ export default function Products() {
     const [searchInput, setSearchInput] = useState("");
 
     const [products, setProducts] = useState([]);
-
+    const [productsFiltered, setProductsFiltered] = useState([]);
 
     async function buscarDados() {
         const resposta = await axios.get("http://localhost:3000/products")
 
+        setProductsFiltered(resposta.data)
         setProducts(resposta.data)
     }
 
@@ -25,23 +26,16 @@ export default function Products() {
         const filteredProducts = products.filter((product) =>
             product.name.toLowerCase().includes(searchInput.toLowerCase()))
 
-        setProducts(filteredProducts)
+        setProductsFiltered(filteredProducts)
         console.log(filteredProducts)
     }
 
-    function handleFilterProducts(){
-        const filteredProducts = products.filter((product) =>
-         product.toLowerCase().includes(searchInput.toLocaleLowerCase) )
-
-        setProducts(filteredProducts)
-        console.log(filteredProducts)
-    }
-
+    
     useEffect(() => {
         handleFilterProducts()
     }, [searchInput])
     //console.log(products)
-    //console.log(products.filter((products) => product.name.length > 3))
+    //console.log(products.filter((products) => product.name.length > 3)
     
 
     useEffect(() => {
@@ -63,7 +57,7 @@ export default function Products() {
              setSearchInput={setSearchInput}
              />
             <Table
-             products={products} 
+             products={productsFiltered} 
              openModalUpdate={handleUpdateProduct}
              />
             <Modal open={open} setOpen={setOpen} />
